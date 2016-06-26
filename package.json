@@ -7,7 +7,7 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "webpack-dev-server",
         "dist": "webpack -p",
-        "postinstall": "npm dist",
+        "postinstall": "npm start",
     },
     "author": "",
     "license": "ISC",
