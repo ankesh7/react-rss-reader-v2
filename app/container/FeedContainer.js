@@ -1,5 +1,5 @@
 var React = require('react');
-var App = require('../components/App');
+var Main = require('../components/Main');
 
 var FeedContainer = React.createClass({
   contextTypes: {
@@ -7,9 +7,8 @@ var FeedContainer = React.createClass({
   },
 
   render: function() {
-
     return (
-      <App url={this.props.location.query.url} />
+      <Main url={this.props.location.query.url} />
     );
   }
 
