@@ -1,38 +1,52 @@
 var React = require('react');
 var Link = require('react-router').Link;
 var Styles = require('../styles/Styles');
+var Store = require('../stores/Store');
+
+function getFeed(){
+  return {
+    url: Store.getFeed(),
+  };
+}
+
+function setFeed(data){
+  Store.setFeed(data);
+}
 
 var InputContainer = React.createClass({
     contextTypes: {
         router: React.PropTypes.object.isRequired
     },
     getInitialState: function() {
-        return {feedURL: ''};
+        return getFeed();
     },
 
-    updateURL: function(e) {
+    _onChange: function(e) {
         this.setState({
-            feedURL: e.target.value,
+            value: e.target.value,
         });
         // console.log(this.state.feedURL);
 
     },
-    onSubmit: function(){
+    _onSubmit: function(e){
+      // e.preventDefault();
+      setFeed(this.state.value);
       this.context.router.push({
           pathname: '/feedpage',
           query: {
-              url: this.state.feedURL
+              url: this.state.value
           }
       })
+
     },
 
     render: function() {
         return (
             <div className="mainContainer" style={Styles.mainContainer}>
-                <form onSubmit={this.onSubmit}>
+                <form onSubmit={this._onSubmit}>
                     <div className="row">
                         <div className="input-field col s12">
-                            <input id="feedinput" type="text" onChange={this.updateURL} value={this.state.feedURL}/>
+                            <input id="feedinput" type="text" onChange={this._onChange} value={this.state.value}/>
                             <label htmlFor="feedinput">
                                 Enter RSS URL
                             </label>

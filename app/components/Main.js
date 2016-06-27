@@ -14,15 +14,13 @@ var Main = React.createClass({
         feed.load(function(result) {
             if (!result.error) {
                 // console.log(result);
-                var container = document.getElementById("app");
                 var repo = [];
 
                 for (var i = 0; i < result.feed.entries.length; i++) {
                     var entry = result.feed.entries[i];
                     repo.push(entry);
                 }
-                this.setState({data:repo
-                })
+                this.setState({data:repo});
             }
         }.bind(this));
 
@@ -34,7 +32,6 @@ var Main = React.createClass({
     },
 
     render: function() {
-         console.log(this.state);
         return (<Reader data={this.state.data} />);
     }
 });
