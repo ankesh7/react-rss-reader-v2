@@ -7,7 +7,7 @@ var Link = require('react-router').Link;
 
 var Reader = React.createClass({
   render: function() {
-    console.log(this.props.data);
+    // console.log(this.props.data);
     var rssEntry = this.props.data.map(function(item, i) {
       return <div
         key={i}
