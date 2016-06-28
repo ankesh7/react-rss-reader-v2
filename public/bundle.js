@@ -27042,10 +27042,6 @@
 	        google.load("feeds", "1");
 	        google.setOnLoadCallback(this.initialize);
 	    },
-	    componentDidMount: function () {
-	        google.load("feeds", "1");
-	        google.setOnLoadCallback(this.initialize);
-	    },
 
 	    render: function () {
 	        return React.createElement(Reader, { data: this.state.data, title: this.state.feedtitle });
