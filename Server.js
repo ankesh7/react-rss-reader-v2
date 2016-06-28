@@ -5,10 +5,10 @@ var fs = require('fs');
 
 var port = process.env.PORT || 8080;
 
-app.use(express.static(__dirname + "/dist")); //use static files in ROOT/public folder
+app.use(express.static(__dirname + "/dist"));
+
 app.get('/', function(request, response) {
-	response.sendFile(path.join(__dirname + 'index.html'));
+	response.sendFile(path.join(__dirname + '/index.html'));
 });
-app.listen(port, function() {
-	console.log('Our app is running on http://localhost:' + port);
-});
+
+app.listen(port);
