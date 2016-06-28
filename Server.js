@@ -11,4 +11,6 @@ app.get('/', function(request, response) {
 	response.sendFile(path.join(__dirname + '/index.html'));
 });
 
-app.listen(port);
+app.listen(port, function(){
+	// console.log(path.join(__dirname + '/dist/index.html'));
+});
