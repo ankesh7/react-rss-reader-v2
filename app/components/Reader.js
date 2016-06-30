@@ -7,6 +7,7 @@ var Link = require('react-router').Link;
 var Loader = require('../components/Loader');
 var _ = require("underscore.string");
 var Styles = require('../styles/Styles');
+var Failure = require('./Failure');
 
 var Reader = React.createClass({
 
@@ -26,11 +27,15 @@ var Reader = React.createClass({
                 </div>;
             });
         } else {
+          if(this.props.failed){
+            var rssEntry = <Failure />
+          }
+          else{
             var rssEntry = <Loader/>
+          }
+
         }
         var title = _.unescapeHTML(this.props.title).trim();
-
-        // console.log(rssEntry);
         return (
             <div className="container">
                 <div className="row">
@@ -41,7 +46,7 @@ var Reader = React.createClass({
 
                     </div>
                     {rssEntry}
-                    
+
                 </div>
             </div>
         );

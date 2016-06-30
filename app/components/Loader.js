@@ -8,7 +8,7 @@ var Loader = React.createClass({
           <div style={Styles.loaderContainer}>
             <div style={Styles.myloader}>
               <div className="preloader-wrapper big active">
-                  <div className="spinner-layer spinner-blue-only">
+                  <div className="spinner-layer spinner-cyan-only">
                       <div className="circle-clipper left">
                           <div className="circle"/>
                       </div>

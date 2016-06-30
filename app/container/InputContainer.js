@@ -6,13 +6,14 @@ var Reader = require('../components/Reader');
 
 var InputContainer = React.createClass({
     getInitialState: function() {
-        return {loading:false, feedtitle: '', data: [], value: 'https://www.engadget.com/rss.xml'}
+        return {loading:false,failed:false, feedtitle: '', data: [], value: 'https://www.engadget.com/rss.xml'}
     },
     _reInit:function(url){
       var feed = new google.feeds.Feed(url);
       feed.setResultFormat(google.feeds.Feed.JSON_FORMAT);
       feed.setNumEntries(20);
       feed.load(function(result) {
+        console.log(result.error);
           if (!result.error) {
               var repo = [];
               var title = result.feed.title;
@@ -20,17 +21,20 @@ var InputContainer = React.createClass({
                   var entry = result.feed.entries[i];
                   repo.push(entry);
               }
-              this.setState({loading:true, feedtitle: title, data: repo});
+              this.setState({loading:true,failed:false,feedtitle: title, data: repo});
+          }
+          else{
+            this.setState({loading:false,failed:true, feedtitle: title, data: repo});
           }
       }.bind(this));
     },
     _onChange: function(e) {
-        this.setState({ loader:false, value: e.target.value});
+        this.setState({ loader:false,failed:false, value: e.target.value});
     },
 
     _onSubmit: function(e) {
       e.preventDefault();
-      this.setState({loading:false});
+      this.setState({loading:false, failed:false});
       setTimeout(function () {
         this._reInit(this.state.value);
       }.bind(this), 800);
@@ -39,7 +43,7 @@ var InputContainer = React.createClass({
     _linkClick: function(e) {
         e.preventDefault();
         var url = $(e.target).attr('data-url');
-        this.setState({loading:false});
+        this.setState({loading:false,failed:false});
         setTimeout(function () {
           this._reInit(url);
         }.bind(this), 800);
@@ -50,6 +54,7 @@ var InputContainer = React.createClass({
         feed.setResultFormat(google.feeds.Feed.JSON_FORMAT);
         feed.setNumEntries(15);
         feed.load(function(result) {
+
             if (!result.error) {
                 var repo = [];
                 var title = result.feed.title;
@@ -57,7 +62,7 @@ var InputContainer = React.createClass({
                     var entry = result.feed.entries[i];
                     repo.push(entry);
                 }
-                this.setState({loading:true,feedtitle: title, data: repo});
+                this.setState({loading:true,failed:false,feedtitle: title, data: repo});
             }
         }.bind(this));
     },
@@ -68,12 +73,11 @@ var InputContainer = React.createClass({
 
     componentDidMount: function() {
         $('.dropdown-button').dropdown({
-            inDuration: 1500, outDuration: 1500, constrain_width: true, // Does not change width of dropdown to that of the activator
-            hover: false, // Activate on hover
-            gutter: 0, // Spacing from edge
-            belowOrigin: true, // Displays dropdown below the button
-            alignment: 'center' // Displays dropdown with edge aligned to the left of button
-        });
+            inDuration: 1500, outDuration: 1500, constrain_width: true,
+            hover: false,
+            gutter: 0,
+            belowOrigin: true,
+            alignment: 'center'   });
         $('.modal-trigger').leanModal({
           ready: function(){
             $('#feedinput').val('');
@@ -88,7 +92,7 @@ var InputContainer = React.createClass({
                 <div className="dropdown-container">
                     <div className="row">
                         <div className="col m6 offset-m3">
-                            <a className="dropdown-button col m12 btn hoverable waves-effect waves-dark" href="javascript:;" data-activates="dropdown1">
+                            <a className="dropdown-button cyan darken-3 col m12 btn hoverable waves-effect waves-dark" href="javascript:;" data-activates="dropdown1">
                                 Select feeds here !
                                 <i className="material-icons right">send</i>
                             </a>
@@ -130,14 +134,12 @@ var InputContainer = React.createClass({
                                  <li className="divider"></li>
                                 <li>
                                     <a className="modal-trigger" href="#modal1">Wanna fetch something else ?</a>
-                                </li>
-
-                            </ul>
+                                </li>    </ul>
                         </div>
                     </div>
 
                 </div>
-                <Reader loader={this.state.loading} data={this.state.data} title={this.state.feedtitle}/>
+                <Reader loader={this.state.loading} failed={this.state.failed} data={this.state.data} title={this.state.feedtitle}/>
                 <div id="modal1" className="modal">
                     <form onSubmit={this._onSubmit}>
                         <div className="modal-content">
