@@ -133,7 +133,7 @@ var InputContainer = React.createClass({
                                 </li>
                                  <li className="divider"></li>
                                 <li>
-                                    <a className="modal-trigger" href="#modal1">Wanna fetch something else ?</a>
+                                    <a className="modal-trigger" href="#modal1"><strong>Wanna fetch something else ?</strong></a>
                                 </li>    </ul>
                         </div>
                     </div>
