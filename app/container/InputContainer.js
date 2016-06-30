@@ -13,7 +13,7 @@ var InputContainer = React.createClass({
       feed.setResultFormat(google.feeds.Feed.JSON_FORMAT);
       feed.setNumEntries(20);
       feed.load(function(result) {
-        console.log(result.error);
+        // console.log(result.error);
           if (!result.error) {
               var repo = [];
               var title = result.feed.title;
